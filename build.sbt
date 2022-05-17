@@ -68,8 +68,8 @@ libraryDependencies ++= Seq(
   Libraries.pureConfig,
   Libraries.logback,
   Libraries.scafeine,
-  Libraries.scalaTest % Test,
-  Libraries.scalaCheck % Test,
+  Libraries.scalaTest      % Test,
+  Libraries.scalaCheck     % Test,
   Libraries.catsScalaCheck % Test,
 )
 
