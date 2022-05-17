@@ -1,8 +1,8 @@
 package forex.http
 package rates
 
+import cats.data.EitherT
 import cats.effect.Sync
-import cats.syntax.flatMap._
 import forex.programs.RatesProgram
 import forex.programs.rates.{ Protocol => RatesProgramProtocol }
 import org.http4s.HttpRoutes
@@ -18,14 +18,11 @@ class RatesHttpRoutes[F[_]: Sync](rates: RatesProgram[F]) extends Http4sDsl[F] {
   private val httpRoutes: HttpRoutes[F] = HttpRoutes.of[F] {
     case GET -> Root :? FromQueryParam(from) +& ToQueryParam(to) =>
       (for {
-        from <- from.validateCurrency
-        to <- to.validateCurrency
-        response = rates
-          .get(RatesProgramProtocol.GetRatesRequest(from, to))
-          .flatMap(Sync[F].fromEither)
-          .flatMap(rate => Ok(rate.asGetApiResponse))
-      } yield response)
-        .fold(_.toResponse, identity)
+        from <- EitherT.fromEither(from.validateCurrency)
+        to <- EitherT.fromEither(to.validateCurrency)
+        rate <- EitherT(rates.get(RatesProgramProtocol.GetRatesRequest(from, to)))
+      } yield rate.asGetApiResponse)
+        .foldF(_.toResponse, Ok(_))
   }
 
   val routes: HttpRoutes[F] = Router(

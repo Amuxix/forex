@@ -31,7 +31,10 @@ package object http {
 
   implicit class ErrorOps[F[_]: Sync](val error: Error) extends Http4sDsl[F] {
     def toResponse: F[Response[F]] = error match {
-      case RateLookupFailed(msg)  => BadRequest(msg)
+      case RateLookupFailed(msg) => BadRequest(msg)
+      case RateRequestFailed(_) =>
+        println("Responding to RateRequestFailed")
+        ServiceUnavailable("External service error")
       case UriCreationFailed(msg) => InternalServerError(msg)
       case InvalidCurrency(msg)   => BadRequest(msg)
     }

@@ -1,7 +1,7 @@
 package forex.services.rates.interpreters.oneframe
 
 import cats.effect.Concurrent
-import cats.syntax.bifunctor._
+import cats.syntax.applicativeError._
 import cats.syntax.either._
 import cats.syntax.functor._
 import cats.syntax.traverse._
@@ -24,10 +24,14 @@ class OneFrame[F[_]: Concurrent](client: Client[F], config: OneFrameConfig) exte
   private def withUri[R](path: Path)(f: Uri => F[Either[Error, R]]): F[Either[Error, R]] =
     Uri
       .fromString(s"http://${config.host}:${config.port}")
-      .leftMap(error => UriCreationFailed(error.details))
-      .leftWiden[Error]
+      .leftMap[Error](error => UriCreationFailed(error.details))
       .map(_.withPath(path))
       .flatTraverse(f)
+      .attempt
+      .map(_.leftMap { error =>
+        println(s"Failure ${error.getMessage}")
+        OneFrameRequestFailed(s"Request to OneFrame failed, ${error.getMessage}")
+      }.joinRight)
 
   override def get(pair: Rate.Pair): F[Error Either Rate] =
     withUri(path"/rates") { uri =>
