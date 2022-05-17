@@ -4,7 +4,7 @@ import cats.Show
 
 sealed trait Currency
 
-object Currency {
+object Currency { //TODO: Add additional supported currencies from https://www.xe.com/iso4217.php
   case object AUD extends Currency
   case object CAD extends Currency
   case object CHF extends Currency

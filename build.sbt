@@ -18,6 +18,7 @@ scalacOptions ++= Seq(
   "-unchecked",                                 // Enable additional warnings where generated code depends on assumptions.
   "-Xcheckinit",                                // Wrap field accessors to throw an exception on uninitialized access.
   "-Xfatal-warnings",                           // Fail the compilation if there are any warnings.
+  "-Wconf:cat=unused:info",                     // Changes unused warning to info to allow scalafmt to handle them, see: https://scalacenter.github.io/scalafix/docs/rules/RemoveUnused.html
   "-Xlint:adapted-args",                        // Warn if an argument list is modified to match the receiver.
   "-Xlint:delayedinit-select",                  // Selecting member of DelayedInit.
   "-Xlint:inaccessible",                        // Warn about inaccessible types in method signatures.
@@ -58,6 +59,7 @@ libraryDependencies ++= Seq(
   Libraries.fs2,
   Libraries.http4sDsl,
   Libraries.http4sServer,
+  Libraries.http4sClient,
   Libraries.http4sCirce,
   Libraries.circeCore,
   Libraries.circeGeneric,
@@ -65,6 +67,7 @@ libraryDependencies ++= Seq(
   Libraries.circeParser,
   Libraries.pureConfig,
   Libraries.logback,
+  Libraries.scafeine,
   Libraries.scalaTest % Test,
   Libraries.scalaCheck % Test,
   Libraries.catsScalaCheck % Test,
