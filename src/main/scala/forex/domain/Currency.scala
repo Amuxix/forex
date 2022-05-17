@@ -337,6 +337,6 @@ object Currency { //TODO: Add additional supported currencies from https://www.x
 
   private lazy val currenciesSwapped: Map[String, Currency] = currencies.map(_.swap)
 
-  def fromString(s: String): Currency = currenciesSwapped(s.toUpperCase)
+  def fromString(s: String): Option[Currency] = currenciesSwapped.get(s.toUpperCase)
 
 }
