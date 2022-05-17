@@ -15,6 +15,8 @@ object Dependencies {
     val scalaCheck          = "1.16.0"
     val scalaTest           = "3.2.12"
     val catsScalaCheck      = "0.3.1"
+
+    val organizeImports      = "0.6.0"
   }
 
   object Libraries {
@@ -44,6 +46,10 @@ object Dependencies {
     lazy val scalaTest           = "org.scalatest"         %% "scalatest"                  % Versions.scalaTest
     lazy val scalaCheck          = "org.scalacheck"        %% "scalacheck"                 % Versions.scalaCheck
     lazy val catsScalaCheck      = "io.chrisdavenport"     %% "cats-scalacheck"            % Versions.catsScalaCheck
+  }
+
+  object ScalaFix {
+    val organizeImports          = "com.github.liancheng"  %% "organize-imports"           % Versions.organizeImports
   }
 
 }

@@ -69,3 +69,11 @@ libraryDependencies ++= Seq(
   Libraries.scalaCheck % Test,
   Libraries.catsScalaCheck % Test,
 )
+
+// Scalafix
+ThisBuild / semanticdbEnabled := true
+ThisBuild / semanticdbVersion := scalafixSemanticdb.revision
+ThisBuild / scalafixScalaBinaryVersion := "2.13"
+ThisBuild / scalafixDependencies += ScalaFix.organizeImports
+
+//TODO Add scala native packager and docker-compose
