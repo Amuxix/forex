@@ -28,10 +28,7 @@ class OneFrame[F[_]: Concurrent](client: Client[F], config: OneFrameConfig) exte
       .map(_.withPath(path))
       .flatTraverse(f)
       .attempt
-      .map(_.leftMap { error =>
-        println(s"Failure ${error.getMessage}")
-        OneFrameRequestFailed(s"Request to OneFrame failed, ${error.getMessage}")
-      }.joinRight)
+      .map(_.leftMap(error => OneFrameRequestFailed(s"Request to OneFrame failed, ${error.getMessage}")).joinRight)
 
   override def get(pair: Rate.Pair): F[Error Either Rate] =
     withUri(path"/rates") { uri =>

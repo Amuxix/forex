@@ -13,11 +13,9 @@ object errors {
   }
 
   def toProgramError(error: RatesServiceError): Error = error match {
-    case RatesServiceError.OneFrameLookupFailed(msg) => Error.RateLookupFailed(msg)
-    case RatesServiceError.OneFrameRequestFailed(msg) =>
-      println("Transforming OneFrameRequestFailed")
-      Error.RateRequestFailed(msg)
-    case RatesServiceError.UriCreationFailed(msg) => Error.UriCreationFailed(msg)
+    case RatesServiceError.OneFrameLookupFailed(msg)  => Error.RateLookupFailed(msg)
+    case RatesServiceError.OneFrameRequestFailed(msg) => Error.RateRequestFailed(msg)
+    case RatesServiceError.UriCreationFailed(msg)     => Error.UriCreationFailed(msg)
   }
 
 }
