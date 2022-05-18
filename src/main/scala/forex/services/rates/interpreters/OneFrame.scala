@@ -1,4 +1,4 @@
-package forex.services.rates.interpreters.oneframe
+package forex.services.rates.interpreters
 
 import cats.effect.Concurrent
 import cats.syntax.applicativeError._
