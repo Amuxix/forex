@@ -34,6 +34,7 @@ package object http {
       case InvalidCurrency(msg)     => BadRequest(msg)
       case InvalidCurrencyPair(msg) => BadRequest(msg)
       case RateLookupFailed(msg)    => BadRequest(msg)
+      case RateNotFound(msg)        => NotFound(msg)
       case RateRequestFailed(_)     => ServiceUnavailable("External service error")
       case UriCreationFailed(msg)   => InternalServerError(msg)
     }

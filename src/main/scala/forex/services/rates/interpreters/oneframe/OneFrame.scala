@@ -39,7 +39,7 @@ class OneFrame[F[_]: Concurrent](client: Client[F], config: OneFrameConfig) exte
             "token" -> config.token,
           )
         )
-        .map(_.headOption.toRight(OneFrameLookupFailed(s"Could not find rate for $pair")).map { rate =>
+        .map(_.headOption.toRight(RateNotFound(s"Could not find rate for $pair")).map { rate =>
           Rate(pair, rate.price, rate.timeStamp)
         })
     }

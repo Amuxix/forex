@@ -6,6 +6,7 @@ object errors {
   object Error {
     final case class OneFrameRequestFailed(msg: String) extends Error
     final case class OneFrameLookupFailed(msg: String) extends Error
+    final case class RateNotFound(msg: String) extends Error
     final case class UriCreationFailed(details: String) extends Error
   }
 
