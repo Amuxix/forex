@@ -53,7 +53,6 @@ resolvers +=
   "Sonatype OSS Snapshots" at "https://oss.sonatype.org/content/repositories/snapshots"
 
 libraryDependencies ++= Seq(
-  compilerPlugin(Libraries.kindProjector cross CrossVersion.full),
   Libraries.cats,
   Libraries.catsEffect,
   Libraries.fs2,
@@ -68,9 +67,9 @@ libraryDependencies ++= Seq(
   Libraries.pureConfig,
   Libraries.logback,
   Libraries.scafeine,
-  Libraries.scalaTest      % Test,
-  Libraries.scalaCheck     % Test,
-  Libraries.catsScalaCheck % Test
+  Libraries.scalaTest          % Test,
+  Libraries.scalaCheck         % Test,
+  Libraries.scalaTestPlusCheck % Test
 )
 
 // Scalafix
@@ -78,5 +77,3 @@ ThisBuild / semanticdbEnabled := true
 ThisBuild / semanticdbVersion := scalafixSemanticdb.revision
 ThisBuild / scalafixScalaBinaryVersion := "2.13"
 ThisBuild / scalafixDependencies += ScalaFix.organizeImports
-
-//TODO Add scala native packager and docker-compose

@@ -8,6 +8,7 @@ import forex.programs.rates.errors.Error
 import forex.programs.rates.errors.Error._
 import io.circe.generic.extras.decoding.{ EnumerationDecoder, UnwrappedDecoder }
 import io.circe.generic.extras.encoding.{ EnumerationEncoder, UnwrappedEncoder }
+import io.circe.syntax._
 import io.circe.{ Decoder, Encoder }
 import org.http4s.circe._
 import org.http4s.dsl.Http4sDsl
@@ -31,12 +32,12 @@ package object http {
 
   implicit class ErrorOps[F[_]: Sync](val error: Error) extends Http4sDsl[F] {
     def toResponse: F[Response[F]] = error match {
-      case InvalidCurrency(msg)     => BadRequest(msg)
-      case InvalidCurrencyPair(msg) => BadRequest(msg)
-      case RateLookupFailed(msg)    => BadRequest(msg)
-      case RateNotFound(msg)        => NotFound(msg)
-      case RateRequestFailed(_)     => ServiceUnavailable("External service error")
-      case UriCreationFailed(msg)   => InternalServerError(msg)
+      case InvalidCurrency(msg)     => BadRequest(msg.asJson)
+      case InvalidCurrencyPair(msg) => BadRequest(msg.asJson)
+      case RateLookupFailed(msg)    => BadRequest(msg.asJson)
+      case RateNotFound(msg)        => NotFound(msg.asJson)
+      case RateRequestFailed(_)     => ServiceUnavailable("External service error".asJson)
+      case UriCreationFailed(msg)   => InternalServerError(msg.asJson)
     }
   }
 }

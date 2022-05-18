@@ -34,7 +34,7 @@ class OneFrame[F[_]: Concurrent](client: Client[F], config: OneFrameConfig) exte
     withUri(path"/rates") { uri =>
       client
         .expect[List[GetApiResponse]](
-          GET.apply(
+          GET(
             uri.withQueryParam("pair", s"${pair.from}${pair.to}"),
             "token" -> config.token,
           )

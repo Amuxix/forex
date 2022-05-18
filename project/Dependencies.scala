@@ -11,11 +11,12 @@ object Dependencies {
     val pureConfig = "0.17.1"
     val scafeine   = "5.1.2"
 
-    val kindProjector  = "0.13.2"
-    val logback        = "1.2.11"
-    val scalaCheck     = "1.16.0"
-    val scalaTest      = "3.2.12"
-    val catsScalaCheck = "0.3.1"
+    val kindProjector      = "0.13.2"
+    val logback            = "1.2.11"
+    val scalaCheck         = "1.16.0"
+    val scalaTest          = "3.2.12"
+    val scalaTestPlusCheck = "3.2.12.0"
+    val catsScalaCheck     = "0.3.1"
 
     val organizeImports = "0.6.0"
   }
@@ -39,16 +40,13 @@ object Dependencies {
     lazy val pureConfig      = "com.github.pureconfig" %% "pureconfig" % Versions.pureConfig
     lazy val scafeine        = "com.github.blemale" %% "scaffeine" % Versions.scafeine
 
-    // Compiler plugins
-    lazy val kindProjector = "org.typelevel" %% "kind-projector" % Versions.kindProjector
-
     // Runtime
     lazy val logback = "ch.qos.logback" % "logback-classic" % Versions.logback
 
     // Test
-    lazy val scalaTest      = "org.scalatest"     %% "scalatest"       % Versions.scalaTest
-    lazy val scalaCheck     = "org.scalacheck"    %% "scalacheck"      % Versions.scalaCheck
-    lazy val catsScalaCheck = "io.chrisdavenport" %% "cats-scalacheck" % Versions.catsScalaCheck
+    lazy val scalaTest          = "org.scalatest"     %% "scalatest"       % Versions.scalaTest
+    lazy val scalaTestPlusCheck = "org.scalatestplus" %% "scalacheck-1-16" % Versions.scalaTestPlusCheck
+    lazy val scalaCheck         = "org.scalacheck"    %% "scalacheck"      % Versions.scalaCheck
   }
 
   object ScalaFix {

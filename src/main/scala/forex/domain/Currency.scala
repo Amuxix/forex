@@ -168,7 +168,7 @@ object Currency {
   case object ZMW extends Currency
   case object ZWD extends Currency
 
-  private val currencies: Map[Currency, String] = Map(
+  val currencies: Map[Currency, String] = Map(
     AED -> "AED",
     AFN -> "AFN",
     ALL -> "ALL",
