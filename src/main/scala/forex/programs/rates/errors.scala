@@ -10,6 +10,7 @@ object errors {
     final case class RateRequestFailed(msg: String) extends Error
     final case class UriCreationFailed(msg: String) extends Error
     final case class InvalidCurrency(msg: String) extends Error
+    final case class InvalidCurrencyPair(msg: String) extends Error
   }
 
   def toProgramError(error: RatesServiceError): Error = error match {

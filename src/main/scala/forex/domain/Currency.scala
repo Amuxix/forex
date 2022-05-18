@@ -4,7 +4,7 @@ import cats.Show
 
 sealed trait Currency
 
-object Currency { //TODO: Add additional supported currencies from https://www.xe.com/iso4217.php
+object Currency {
   case object AED extends Currency
   case object AFN extends Currency
   case object ALL extends Currency
