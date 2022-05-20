@@ -26,7 +26,7 @@ class RatesHttpRoutes[F[_]: Sync](rates: RatesProgram[F]) extends Http4sDsl[F] {
               (),
               InvalidCurrencyPair(s"Two different rates are required to fetch an exchange rate for!")
             )
-        rate <- EitherT(rates.get(RatesProgramProtocol.GetRatesRequest(from, to)))
+        rate <- rates.get(RatesProgramProtocol.GetRatesRequest(from, to))
       } yield rate.asGetApiResponse)
         .foldF(_.toResponse, Ok(_))
   }

@@ -12,7 +12,6 @@ import forex.domain.Rate.Pair
 import forex.domain.{ Currency, Price, Rate, Timestamp }
 import forex.http.rates.Protocol.GetApiResponse
 import forex.services.RatesService
-import forex.services.rates.Algebra
 import forex.services.rates.errors.Error
 import forex.services.rates.errors.Error.{ OneFrameRequestFailed, RateNotFound }
 import org.http4s.circe.CirceEntityDecoder._
@@ -48,7 +47,7 @@ class ForexSpec
   )
 
   private val defaultPrice = Price(1)
-  private def okInterpreter: RatesService[IO] =
+  private val okInterpreter: RatesService[IO] =
     (pair: Pair) => Rate(pair, defaultPrice, Timestamp.now).asRight[Error].pure[IO]
 
   private def okApp: HttpApp[IO] = new Module[IO](okInterpreter, config).httpApp
@@ -105,8 +104,8 @@ class ForexSpec
       }
 
       "OneFrame returns no results" in {
-        def noRateInterpreter: Algebra[IO] = _ => RateNotFound("").asLeft[Rate].pure[IO]
-        def noRateApp                      = new Module[IO](noRateInterpreter, config).httpApp
+        def noRateInterpreter: RatesService[IO] = _ => RateNotFound("").asLeft[Rate].pure[IO]
+        def noRateApp                           = new Module[IO](noRateInterpreter, config).httpApp
         forAll { (from: Currency, to: Currency) =>
           whenever(from != to) {
             check(noRateApp, _.addCurrencyQueryParams(from, to), Status.NotFound, any[String])
@@ -114,8 +113,8 @@ class ForexSpec
         }
       }
       "OneFrame does not respond" in {
-        def requestFailInterpreter: Algebra[IO] = _ => OneFrameRequestFailed("").asLeft[Rate].pure[IO]
-        def requestFailApp                      = new Module[IO](requestFailInterpreter, config).httpApp
+        def requestFailInterpreter: RatesService[IO] = _ => OneFrameRequestFailed("").asLeft[Rate].pure[IO]
+        def requestFailApp                           = new Module[IO](requestFailInterpreter, config).httpApp
         forAll { (from: Currency, to: Currency) =>
           whenever(from != to) {
             check(requestFailApp, _.addCurrencyQueryParams(from, to), Status.ServiceUnavailable, any[String])

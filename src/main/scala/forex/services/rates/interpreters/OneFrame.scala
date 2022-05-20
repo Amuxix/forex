@@ -30,7 +30,7 @@ class OneFrame[F[_]: Concurrent](client: Client[F], config: OneFrameConfig) exte
       .attempt
       .map(_.leftMap(error => OneFrameRequestFailed(s"Request to OneFrame failed, ${error.getMessage}")).joinRight)
 
-  override def get(pair: Rate.Pair): F[Error Either Rate] =
+  override def get(pair: Rate.Pair): F[Either[Error, Rate]] =
     withUri(path"/rates") { uri =>
       client
         .expect[List[GetApiResponse]](

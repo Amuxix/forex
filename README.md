@@ -13,7 +13,7 @@ The simplest way to compile and run is using:
 To support 10,000 successful requests per day with 1 API token I have added a cache that caches requests
 for up to 5 minutes.
 
-However, since the addition of new supported currencies there are over 25,000 possible currency pairs making hitting
+However, since the addition of new supported currencies there are over 13,000 possible currency pairs making hitting
 the OneFrame request limit is still possible, if this proves to be a problem a possible solution would be to request
 multiple pairs from OneFrame with a single request and cache those values instead of requesting a single pair per request.
 
